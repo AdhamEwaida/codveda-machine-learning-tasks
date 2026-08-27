@@ -16,6 +16,7 @@ Then run each task from its own folder:
 python task1_preprocessing.py
 python task2_linear_regression.py
 python task3_knn_classifier.py
+python task4_logistic_regression.py
 ```
 
 Each script creates an `outputs` folder containing the generated dataset, metrics, reports, and/or charts. The solutions use deterministic random seeds so the results can be reproduced.
@@ -29,4 +30,4 @@ Each script creates an `outputs` folder containing the generated dataset, metric
 
 ## Note on data
 
-The two original ZIP archives were not available in the accessible Downloads/Desktop folders. To keep the submission executable, Task 1 creates a clearly documented raw demo dataset with the required missing and categorical values, while Tasks 2 and 3 use stable datasets bundled with scikit-learn.
+The two original ZIP archives were not available in the accessible Downloads/Desktop folders. To keep the submission executable, Task 1 creates a clearly documented raw demo dataset with the required missing and categorical values, Tasks 2 and 3 use stable datasets bundled with scikit-learn, and Task 4 creates a documented synthetic customer-churn dataset with missing values for preprocessing.
