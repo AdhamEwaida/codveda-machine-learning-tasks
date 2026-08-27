@@ -1,0 +1,16 @@
+LEVEL 1 - TASK 2: SIMPLE LINEAR REGRESSION
+
+Dataset: scikit-learn diabetes dataset (442 observations)
+Predictor: BMI feature (standardized)
+Target: quantitative disease-progression measure
+Training / test split: 80% / 20% (random_state=42)
+
+Model equation:
+predicted_target = 152.0034 + (998.5777 * BMI)
+
+Interpretation:
+For every one-unit increase in the standardized BMI feature, the predicted
+disease-progression target increases by 998.5777 units on average.
+
+Test-set R-squared: 0.2334
+Test-set mean squared error (MSE): 4061.8259

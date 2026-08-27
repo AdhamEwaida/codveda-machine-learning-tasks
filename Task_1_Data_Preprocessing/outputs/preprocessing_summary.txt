@@ -1,0 +1,19 @@
+LEVEL 1 - TASK 1: DATA PREPROCESSING
+Raw dataset shape: (120, 6)
+Missing values before preprocessing:
+customer_id        0
+age               10
+monthly_income     8
+account_type       0
+city               6
+churned            0
+
+Train set shape: (96, 9)
+Test set shape: (24, 9)
+
+Operations completed:
+- Numeric missing values filled with the training-set median.
+- Categorical missing values filled with the training-set mode.
+- Categorical variables encoded using one-hot encoding.
+- Numeric variables standardized with StandardScaler.
+- Data split into stratified 80% training and 20% testing sets.
