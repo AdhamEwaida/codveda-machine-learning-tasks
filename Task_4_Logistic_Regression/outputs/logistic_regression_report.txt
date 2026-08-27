@@ -1,0 +1,29 @@
+LEVEL 2 - TASK 1: LOGISTIC REGRESSION FOR BINARY CLASSIFICATION
+
+Objective: predict whether a customer will churn (1) or stay (0).
+Dataset: documented synthetic customer-churn data; 600 records.
+Preprocessing: median/mode imputation, one-hot encoding, and numeric standardization.
+Class handling: class_weight='balanced' to improve detection of the minority churn class.
+Split: stratified 80% training / 20% testing (random_state=42).
+
+Test metrics
+- Accuracy: 0.6917
+- Precision: 0.4130
+- Recall: 0.6552
+- ROC-AUC: 0.7378
+
+Coefficient interpretation
+Positive coefficients increase the log-odds of churn; negative coefficients decrease it.
+The odds_ratio column in coefficient_and_odds_ratio.csv is exp(coefficient): values above
+1 increase the odds of churn, while values below 1 decrease them.
+
+Classification report
+              precision    recall  f1-score   support
+
+      Stayed       0.86      0.70      0.78        91
+     Churned       0.41      0.66      0.51        29
+
+    accuracy                           0.69       120
+   macro avg       0.64      0.68      0.64       120
+weighted avg       0.76      0.69      0.71       120
+

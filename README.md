@@ -1,6 +1,6 @@
-# Level 1 - Machine Learning Tasks
+# Codveda Machine Learning Tasks
 
-This folder contains complete, reproducible solutions for all three Level 1 tasks from the provided task list.
+This folder contains complete, reproducible solutions for the completed tasks from the provided task list.
 
 ## Setup
 
@@ -25,6 +25,7 @@ Each script creates an `outputs` folder containing the generated dataset, metric
 1. **Data preprocessing:** missing-value imputation, categorical encoding, numerical standardization, and an 80/20 train/test split.
 2. **Simple linear regression:** predicts the diabetes disease-progression target using the BMI feature; reports R-squared, MSE, and the model coefficient.
 3. **KNN classifier:** classifies Iris species; compares K values 1 through 15 and reports accuracy, precision, recall, and a confusion matrix.
+4. **Logistic regression:** predicts customer churn and reports accuracy, precision, recall, ROC-AUC, odds ratios, and a ROC curve.
 
 ## Note on data
 
