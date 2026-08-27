@@ -1,0 +1,22 @@
+LEVEL 2 - TASK 2: DECISION TREES FOR CLASSIFICATION
+
+Dataset: scikit-learn Iris dataset (150 labeled samples, 3 classes).
+Split: stratified 80% training / 20% testing (random_state=42).
+Pruning: cost-complexity pruning (ccp_alpha) selected with 5-fold CV on the training set.
+
+Selected ccp_alpha: 0.008114
+Pruned tree depth: 3
+Pruned tree node count: 7
+Test accuracy: 0.9667
+Test macro F1-score: 0.9666
+
+Classification report
+              precision    recall  f1-score   support
+
+      setosa     1.0000    1.0000    1.0000        10
+  versicolor     1.0000    0.9000    0.9474        10
+   virginica     0.9091    1.0000    0.9524        10
+
+    accuracy                         0.9667        30
+   macro avg     0.9697    0.9667    0.9666        30
+weighted avg     0.9697    0.9667    0.9666        30
