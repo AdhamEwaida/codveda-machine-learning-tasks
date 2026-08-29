@@ -1,0 +1,14 @@
+LEVEL 2 - TASK 3: K-MEANS CLUSTERING
+
+Dataset: synthetic customer segmentation data with 270 records.
+Features: annual income and spending score.
+Preprocessing: StandardScaler applied before clustering.
+K selection: elbow method over K=1..10.
+Selected K: 4
+Silhouette score: 0.6956
+
+Cluster interpretation
+- Cluster 0: high-income, lower-spending customers.
+- Cluster 1: lower-income, high-spending customers.
+- Cluster 2: high-income, high-spending customers.
+- Cluster 3: lower-income, lower-spending customers.

@@ -1,3 +1,5 @@
 __pycache__/
 *.py[cod]
 .DS_Store
+.venv_task6/
+.venv_task6_314/
