@@ -8,7 +8,7 @@ This task implements K-Means clustering for customer segmentation using Python, 
 - Uses annual income and spending score as clustering features.
 - Standardizes the numerical features with `StandardScaler`.
 - Runs K-Means for K values from 1 to 10.
-- Uses the elbow method to select the number of clusters.
+- Uses the elbow method to select the number of clusters and silhouette scores to validate it.
 - Fits the final K-Means model.
 - Calculates the silhouette score as an additional quality check.
 - Visualizes the elbow curve and the final 2D customer clusters.
@@ -28,7 +28,7 @@ The task is deterministic because it uses a fixed random seed.
 Running the script creates:
 
 - `customer_segmentation_data.csv` - the raw unlabeled dataset.
-- `outputs/elbow_results.csv` - inertia for each tested K value.
+- `outputs/elbow_results.csv` - inertia and silhouette score for each tested K value.
 - `outputs/clustered_customers.csv` - every customer with its assigned cluster.
 - `outputs/cluster_centers.csv` - final cluster centroids in the original feature scale.
 - `outputs/cluster_summary.csv` - count and mean values for each cluster.

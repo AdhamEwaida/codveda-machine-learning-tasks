@@ -8,8 +8,8 @@ from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import StandardScaler
 
 RANDOM_STATE = 42
-OUTPUT_DIR = Path(__file__).resolve().parent / "outputs"
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+BASE_DIR = Path(__file__).resolve().parent
+OUTPUT_DIR = BASE_DIR / "outputs"
 
 
 def build_customer_dataset() -> pd.DataFrame:
@@ -29,7 +29,9 @@ def build_customer_dataset() -> pd.DataFrame:
     data = pd.concat(frames, ignore_index=True)
     data["annual_income_k"] = data["annual_income_k"].clip(15, 130).round(2)
     data["spending_score"] = data["spending_score"].clip(1, 100).round(2)
-    return data.sample(frac=1, random_state=RANDOM_STATE).reset_index(drop=True)
+    data = data.sample(frac=1, random_state=RANDOM_STATE).reset_index(drop=True)
+    data.insert(0, "customer_id", np.arange(1, len(data) + 1))
+    return data
 
 
 def choose_elbow(k_values: list[int], inertias: list[float]) -> int:
@@ -51,8 +53,9 @@ def choose_elbow(k_values: list[int], inertias: list[float]) -> int:
 
 
 def main() -> None:
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     data = build_customer_dataset()
-    raw_path = Path(__file__).resolve().parent / "customer_segmentation_data.csv"
+    raw_path = BASE_DIR / "customer_segmentation_data.csv"
     data.to_csv(raw_path, index=False)
     features = ["annual_income_k", "spending_score"]
     scaler = StandardScaler()
@@ -60,10 +63,14 @@ def main() -> None:
 
     k_values = list(range(1, 11))
     inertias = []
+    silhouette_scores = []
     for k in k_values:
         model = KMeans(n_clusters=k, random_state=RANDOM_STATE, n_init=20)
-        model.fit(X_scaled)
+        candidate_labels = model.fit_predict(X_scaled)
         inertias.append(float(model.inertia_))
+        silhouette_scores.append(
+            np.nan if k == 1 else float(silhouette_score(X_scaled, candidate_labels))
+        )
 
     optimal_k = choose_elbow(k_values, inertias)
     final_model = KMeans(n_clusters=optimal_k, random_state=RANDOM_STATE, n_init=20)
@@ -74,7 +81,9 @@ def main() -> None:
     clustered["cluster"] = labels
     clustered.to_csv(OUTPUT_DIR / "clustered_customers.csv", index=False)
 
-    elbow_results = pd.DataFrame({"k": k_values, "inertia": inertias})
+    elbow_results = pd.DataFrame(
+        {"k": k_values, "inertia": inertias, "silhouette_score": silhouette_scores}
+    )
     elbow_results.to_csv(OUTPUT_DIR / "elbow_results.csv", index=False)
 
     centers_scaled = final_model.cluster_centers_
@@ -82,11 +91,18 @@ def main() -> None:
     centers_df = pd.DataFrame(centers, columns=features)
     centers_df.index.name = "cluster"
     centers_df.to_csv(OUTPUT_DIR / "cluster_centers.csv")
-    summary_rows = clustered.groupby("cluster")[features].agg(["count", "mean"])
-    summary_rows.to_csv(OUTPUT_DIR / "cluster_summary.csv")
+    summary_rows = clustered.groupby("cluster", as_index=False).agg(
+        customer_count=("customer_id", "count"),
+        mean_annual_income_k=("annual_income_k", "mean"),
+        mean_spending_score=("spending_score", "mean"),
+    )
+    summary_rows[["mean_annual_income_k", "mean_spending_score"]] = summary_rows[
+        ["mean_annual_income_k", "mean_spending_score"]
+    ].round(2)
+    summary_rows.to_csv(OUTPUT_DIR / "cluster_summary.csv", index=False)
 
     plt.figure(figsize=(8, 5))
-    plt.plot(k_values, inertias, marker="o")
+    plt.plot(k_values, inertias, marker="o", color="navy")
     plt.axvline(optimal_k, linestyle="--", label=f"Selected K = {optimal_k}")
     plt.xlabel("Number of clusters (K)")
     plt.ylabel("Inertia")
@@ -97,14 +113,20 @@ def main() -> None:
     plt.close()
 
     plt.figure(figsize=(8, 6))
+    colors = plt.colormaps["tab10"]
     for cluster_id in sorted(clustered["cluster"].unique()):
         subset = clustered[clustered["cluster"] == cluster_id]
         plt.scatter(
             subset["annual_income_k"],
             subset["spending_score"],
+            alpha=0.75,
+            color=colors(cluster_id),
             label=f"Cluster {cluster_id}",
         )
-    plt.scatter(centers[:, 0], centers[:, 1], marker="X", s=220, label="Centroids")
+    plt.scatter(
+        centers[:, 0], centers[:, 1], marker="X", s=240,
+        color="black", edgecolor="white", linewidth=1, label="Centroids",
+    )
     plt.xlabel("Annual Income (thousands)")
     plt.ylabel("Spending Score")
     plt.title("Customer Segments from K-Means")
@@ -126,7 +148,7 @@ def main() -> None:
         f"Dataset: synthetic customer segmentation data with {len(data)} records.\n"
         "Features: annual income and spending score.\n"
         "Preprocessing: StandardScaler applied before clustering.\n"
-        "K selection: elbow method over K=1..10.\n"
+        "K selection: elbow method over K=1..10, with silhouette scores as validation.\n"
         f"Selected K: {optimal_k}\n"
         f"Silhouette score: {silhouette:.4f}\n\n"
         "Cluster interpretation\n- " + "\n- ".join(interpretations) + "\n"

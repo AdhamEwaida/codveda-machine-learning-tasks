@@ -10,15 +10,15 @@ Run the following once in a terminal:
 python -m pip install -r requirements.txt
 ```
 
-Then run each task from its own folder:
+Run the tasks from the repository root:
 
 ```powershell
-python task1_preprocessing.py
-python task2_linear_regression.py
-python task3_knn_classifier.py
-python task4_logistic_regression.py
-python task5_decision_tree.py
-python task6_kmeans_clustering.py
+python .\Task_1_Data_Preprocessing\task1_preprocessing.py
+python .\Task_2_Linear_Regression\task2_linear_regression.py
+python .\Task_3_KNN_Classifier\task3_knn_classifier.py
+python .\Task_4_Logistic_Regression\task4_logistic_regression.py
+python .\Task_5_Decision_Tree\task5_decision_tree.py
+python .\Task_6_KMeans_Clustering\task6_kmeans_clustering.py
 ```
 
 Each script creates an `outputs` folder containing the generated dataset, metrics, reports, and/or charts. The solutions use deterministic random seeds so the results can be reproduced.

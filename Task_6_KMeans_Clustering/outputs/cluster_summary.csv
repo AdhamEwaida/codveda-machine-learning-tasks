@@ -1,7 +1,5 @@
-,annual_income_k,annual_income_k,spending_score,spending_score
-,count,mean,count,mean
-cluster,,,,
-0,60,85.59916666666666,60,25.21783333333333
-1,65,39.681538461538466,65,80.16276923076923
-2,70,89.395,70,80.02271428571429
-3,75,35.14053333333333,75,23.9304
+cluster,customer_count,mean_annual_income_k,mean_spending_score
+0,60,85.6,25.22
+1,65,39.68,80.16
+2,70,89.4,80.02
+3,75,35.14,23.93
