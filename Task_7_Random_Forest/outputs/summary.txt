@@ -1,0 +1,36 @@
+LEVEL 3 - TASK 1: RANDOM FOREST CLASSIFIER
+
+Dataset: Wisconsin Diagnostic Breast Cancer dataset
+Records: 569
+Features: 30
+Positive class: malignant diagnosis
+Split: stratified 80% training / 20% testing (random_state=42)
+Hyperparameter tuning: 5-fold GridSearchCV optimized for malignant-class F1
+Best parameters: max_depth=None, min_samples_leaf=2, min_samples_split=2, n_estimators=400
+Best grid-search F1: 0.9531
+
+Five-fold cross-validation means on training data
+- Accuracy: 0.9648
+- Precision (malignant): 0.9482
+- Recall (malignant): 0.9588
+- F1 (malignant): 0.9531
+
+Held-out test metrics
+- Accuracy: 0.9649
+- Precision (malignant): 0.9750
+- Recall (malignant): 0.9286
+- F1 (malignant): 0.9512
+- ROC-AUC: 0.9970
+
+Most important features
+             feature  importance
+          worst area    0.138682
+     worst perimeter    0.133892
+worst concave points    0.106010
+ mean concave points    0.100982
+        worst radius    0.084103
+      mean concavity    0.064405
+         mean radius    0.051255
+      mean perimeter    0.049903
+           mean area    0.037030
+     worst concavity    0.036705

@@ -19,6 +19,7 @@ python .\Task_3_KNN_Classifier\task3_knn_classifier.py
 python .\Task_4_Logistic_Regression\task4_logistic_regression.py
 python .\Task_5_Decision_Tree\task5_decision_tree.py
 python .\Task_6_KMeans_Clustering\task6_kmeans_clustering.py
+python .\Task_7_Random_Forest\task7_random_forest.py
 ```
 
 Each script creates an `outputs` folder containing the generated dataset, metrics, reports, and/or charts. The solutions use deterministic random seeds so the results can be reproduced.
@@ -31,7 +32,8 @@ Each script creates an `outputs` folder containing the generated dataset, metric
 4. **Logistic regression:** predicts customer churn and reports accuracy, precision, recall, ROC-AUC, odds ratios, and a ROC curve.
 5. **Decision tree classification:** classifies Iris species, compares an unpruned tree with a cost-complexity-pruned tree, visualizes the final tree, and reports accuracy and macro F1-score.
 6. **K-Means clustering:** segments unlabeled customer data after standardization, selects K with the elbow method, visualizes clusters in 2D, and summarizes the discovered customer groups.
+7. **Random forest classification:** tunes a Random Forest with cross-validation, evaluates precision, recall, and F1-score, and analyzes feature importance on the Wisconsin breast-cancer dataset.
 
 ## Note on data
 
-The two original ZIP archives were not available in the accessible Downloads/Desktop folders. To keep the submission executable, Task 1 creates a clearly documented raw demo dataset with the required missing and categorical values, Tasks 2, 3, and 5 use stable datasets bundled with scikit-learn, Task 4 creates a documented synthetic customer-churn dataset with missing values for preprocessing, and Task 6 creates a reproducible synthetic customer-segmentation dataset.
+The two original ZIP archives were not available in the accessible Downloads/Desktop folders. To keep the submission executable, Task 1 creates a clearly documented raw demo dataset with the required missing and categorical values, Tasks 2, 3, 5, and 7 use stable datasets bundled with scikit-learn, Task 4 creates a documented synthetic customer-churn dataset with missing values for preprocessing, and Task 6 creates a reproducible synthetic customer-segmentation dataset.
