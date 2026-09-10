@@ -20,6 +20,7 @@ python .\Task_4_Logistic_Regression\task4_logistic_regression.py
 python .\Task_5_Decision_Tree\task5_decision_tree.py
 python .\Task_6_KMeans_Clustering\task6_kmeans_clustering.py
 python .\Task_7_Random_Forest\task7_random_forest.py
+python .\Task_8_SVM_Classification\task8_svm_classification.py
 ```
 
 Each script creates an `outputs` folder containing the generated dataset, metrics, reports, and/or charts. The solutions use deterministic random seeds so the results can be reproduced.
@@ -33,6 +34,7 @@ Each script creates an `outputs` folder containing the generated dataset, metric
 5. **Decision tree classification:** classifies Iris species, compares an unpruned tree with a cost-complexity-pruned tree, visualizes the final tree, and reports accuracy and macro F1-score.
 6. **K-Means clustering:** segments unlabeled customer data after standardization, selects K with the elbow method, visualizes clusters in 2D, and summarizes the discovered customer groups.
 7. **Random forest classification:** tunes a Random Forest with cross-validation, evaluates precision, recall, and F1-score, and analyzes feature importance on the Wisconsin breast-cancer dataset.
+8. **Support Vector Machine classification:** tunes and compares linear and RBF kernels, evaluates classification and ROC-AUC metrics, and visualizes decision boundaries in a two-dimensional PCA projection.
 
 ## Note on data
 

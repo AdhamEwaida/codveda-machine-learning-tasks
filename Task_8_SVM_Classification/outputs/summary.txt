@@ -1,0 +1,22 @@
+LEVEL 3 - TASK 2: SUPPORT VECTOR MACHINE CLASSIFICATION
+
+Dataset: Wisconsin Diagnostic Breast Cancer dataset
+Records: 569
+Features: 30
+Positive class: malignant diagnosis
+Split: stratified 80% training / 20% testing (random_state=42)
+Preprocessing: StandardScaler fitted inside each cross-validation fold
+Tuning: separate 5-fold GridSearchCV searches optimized for ROC-AUC
+
+Kernel comparison on held-out test data
+kernel  accuracy  precision_malignant  recall_malignant  f1_malignant  roc_auc  best_cv_roc_auc  best_C     best_gamma
+linear  0.991228                  1.0          0.976190      0.987952 0.996362         0.994840     0.1 not applicable
+   rbf  0.982456                  1.0          0.952381      0.975610 0.996032         0.995872   100.0          0.001
+
+Best held-out ROC-AUC: LINEAR kernel (0.9964)
+
+Interpretation:
+- The linear kernel tests a straight separating boundary.
+- The RBF kernel can model nonlinear boundaries.
+- Full 30-feature models produce the reported metrics.
+- Separate PCA-based 2D models are used only to visualize the boundary shapes.
