@@ -1,0 +1,21 @@
+LEVEL 3 - TASK 3: NEURAL NETWORK WITH TENSORFLOW/KERAS
+
+Dataset: scikit-learn Digits dataset
+Records: 1797
+Input features: 64 normalized pixel values
+Classes: 10 digits (0-9)
+Split: 1149 training / 288 validation / 360 testing
+Architecture: Input(64) -> Dense(128, ReLU) -> Dropout(0.20) -> Dense(64, ReLU) -> Dense(10, Softmax)
+Optimizer: Adam (learning_rate=0.001)
+Loss: sparse categorical cross-entropy
+Training: backpropagation with a maximum of 50 epochs and early stopping
+Epochs completed: 43
+Best validation-loss epoch: 37
+Trainable parameters: 17226
+
+Held-out test metrics
+- Loss: 0.0692
+- Accuracy: 0.9806
+- Macro precision: 0.9805
+- Macro recall: 0.9804
+- Macro F1-score: 0.9804
