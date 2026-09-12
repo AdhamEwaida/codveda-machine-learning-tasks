@@ -1,7 +1,9 @@
 """Level 3 - Task 3: feed-forward neural network with TensorFlow/Keras."""
 
+import json
 import os
 from pathlib import Path
+import zipfile
 
 os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
 os.environ.setdefault("TF_ENABLE_ONEDNN_OPTS", "0")
@@ -26,6 +28,40 @@ import tensorflow as tf
 RANDOM_STATE = 42
 BASE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = BASE_DIR / "outputs"
+
+
+def normalize_keras_archive(model_path: Path) -> None:
+    """Remove save-time metadata so repeated deterministic runs create one file."""
+    def normalize_shared_ids(value: object) -> None:
+        if isinstance(value, dict):
+            if "shared_object_id" in value:
+                value["shared_object_id"] = 1
+            for child in value.values():
+                normalize_shared_ids(child)
+        elif isinstance(value, list):
+            for child in value:
+                normalize_shared_ids(child)
+
+    temporary_path = model_path.with_suffix(".normalized.keras")
+    fixed_timestamp = (2020, 1, 1, 0, 0, 0)
+    with zipfile.ZipFile(model_path, "r") as source, zipfile.ZipFile(
+        temporary_path, "w", compression=zipfile.ZIP_DEFLATED
+    ) as destination:
+        for source_info in source.infolist():
+            content = source.read(source_info.filename)
+            if source_info.filename == "metadata.json":
+                metadata = json.loads(content.decode("utf-8"))
+                metadata["date_saved"] = "2020-01-01@00:00:00"
+                content = json.dumps(metadata, sort_keys=True).encode("utf-8")
+            elif source_info.filename == "config.json":
+                configuration = json.loads(content.decode("utf-8"))
+                normalize_shared_ids(configuration)
+                content = json.dumps(configuration, sort_keys=True).encode("utf-8")
+            target_info = zipfile.ZipInfo(source_info.filename, fixed_timestamp)
+            target_info.compress_type = zipfile.ZIP_DEFLATED
+            target_info.external_attr = source_info.external_attr
+            destination.writestr(target_info, content)
+    temporary_path.replace(model_path)
 
 
 def build_model(number_of_features: int, number_of_classes: int) -> tf.keras.Model:
@@ -153,7 +189,9 @@ def main() -> None:
     (OUTPUT_DIR / "model_architecture.txt").write_text(
         "\n".join(architecture_lines), encoding="utf-8"
     )
-    model.save(OUTPUT_DIR / "digits_neural_network.keras")
+    model_path = OUTPUT_DIR / "digits_neural_network.keras"
+    model.save(model_path)
+    normalize_keras_archive(model_path)
 
     fig, axes = plt.subplots(1, 2, figsize=(13, 5))
     axes[0].plot(history_table["epoch"], history_table["loss"], label="Training")

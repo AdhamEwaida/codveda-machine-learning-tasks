@@ -133,7 +133,8 @@ def main() -> None:
             "predicted_diagnosis": pd.Series(
                 predicted_class, index=y_test.index
             ).map({0: "benign", 1: "malignant"}),
-            "malignant_probability": malignant_probability,
+            # Stable CSV formatting despite harmless parallel floating-point order.
+            "malignant_probability": malignant_probability.round(12),
         }
     ).reset_index(drop=True)
     predictions.to_csv(OUTPUT_DIR / "test_predictions.csv", index=False)
